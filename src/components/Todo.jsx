@@ -6,17 +6,7 @@ import { TbEdit, TbEditOff } from "react-icons/tb";
 import { MdDeleteOutline } from "react-icons/md";
 import "./Todo.css";
 
-function Todo({
-  error,
-  editOff,
-  value,
-  onChange,
-  todo,
-  currentTodo,
-  onComplete,
-  onUpdate,
-  onDelete,
-}) {
+function Todo({ todo, currentTodo, onComplete, onUpdate, onDelete }) {
   const stylesTile = {
     wordWrap: "wrap-word",
     textAlign: "justify",
@@ -61,14 +51,14 @@ function Todo({
               color={"blue"}
               size={"1.5em"}
               className="clickable"
-              onClick={() => !error && onUpdate(todo)}
+              onClick={() => onUpdate(todo)}
             />
           ) : (
             <TbEdit
               color={"blue"}
               size={"1.5em"}
               className="clickable"
-              onClick={() => !error && editOff && onUpdate(todo)}
+              onClick={() => onUpdate(todo)}
             />
           )}
         </li>
@@ -81,9 +71,6 @@ function Todo({
           />
         </li>
       </ul>
-      {todo._id === currentTodo._id && error && (
-        <p className="alert">{error}</p>
-      )}
     </>
   );
 }

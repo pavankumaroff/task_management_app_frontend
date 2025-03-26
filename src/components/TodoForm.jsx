@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import UserContext from "../contexts/userContext";
 import { options } from "../validations/todoForm";
 import { useForm } from "react-hook-form";
@@ -6,14 +6,22 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import "./TodoForm.css";
 
-function TodoForm({ onAdd, onUpdate, disabled }) {
+function TodoForm({ onAdd, currentTodo, editOff, disabled }) {
   const user = useContext(UserContext);
   const { register, handleSubmit, formState, reset } = useForm(options);
   const { errors } = formState;
 
+  useEffect(() => {
+    if (!editOff) {
+      reset(currentTodo);
+    } else {
+      reset();
+    }
+  }, [editOff, reset]);
+
   const submitTask = (data) => {
-    onAdd({ ...data, userId: user._id });
-    reset();
+    onAdd({ ...currentTodo, ...data, userId: user._id });
+    reset({ title: "", description: "" });
   };
 
   return (
@@ -39,7 +47,7 @@ function TodoForm({ onAdd, onUpdate, disabled }) {
           <p className="alert">{errors.description.message}</p>
         )}
       </div>
-      <Button disabled={disabled}>Add</Button>
+      <Button disabled={disabled}>{editOff ? "Add" : "Update"}</Button>
     </form>
   );
 }
