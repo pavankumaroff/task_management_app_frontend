@@ -47,6 +47,7 @@ function TodoList() {
     try {
       setDisabled((prev) => !prev);
       const { data: newTodo } = await saveTodo(todo);
+
       setTodos((prevTodos) => [...prevTodos, newTodo]);
       setDisabled((prev) => !prev);
       toast.success("Task added successfully!😀");
@@ -70,7 +71,8 @@ function TodoList() {
   const handleUpdate = async (todo) => {
     const originalTodos = todos;
 
-    if (todo.completed) return;
+    // if (todo.completed) return;
+    if (todo.status == "Completed") return;
     setEditOff((prev) => !prev);
     setCurrentTodo(editOff ? todo : {});
     setTask(todo.title);
@@ -100,7 +102,9 @@ function TodoList() {
     const newTodos = [...originalTodos];
     const index = newTodos.findIndex((td) => td._id === todo._id);
     newTodos[index] = { ...todo };
-    newTodos[index].completed = !newTodos[index].completed;
+    // newTodos[index].completed = !newTodos[index].completed;
+    if (editOff) newTodos[index].status = "Completed";
+    else newTodos[index].status = "Pending";
     setTodos(newTodos);
 
     try {

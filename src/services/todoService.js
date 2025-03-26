@@ -14,6 +14,8 @@ export function saveTodo(todo) {
   if (todo._id) {
     const body = { ...todo };
     delete body._id;
+    delete body.createdAt;
+    delete body.updatedAt;
 
     return http.put(`${apiEndPoint}/${todo._id}`, body);
   }

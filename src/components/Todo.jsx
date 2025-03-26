@@ -17,7 +17,13 @@ function Todo({
   onUpdate,
   onDelete,
 }) {
-  const styles = {
+  const stylesTile = {
+    wordWrap: "wrap-word",
+    textAlign: "justify",
+    marginBottom: "10px",
+  };
+
+  const stylesDescription = {
     fontSize: "18px",
     wordWrap: "wrap-word",
     textAlign: "justify",
@@ -26,21 +32,12 @@ function Todo({
   return (
     <>
       <ul className="todo-items">
-        <li className={todo.completed ? "completed" : ""}>
-          {todo._id === currentTodo._id ? (
-            <input
-              autoFocus={true}
-              value={value}
-              onChange={(e) => onChange(e.target.value)}
-              placeholder={"Update your todo."}
-              className="task-input"
-            />
-          ) : (
-            <p style={styles}>{todo.title}</p>
-          )}
+        <li>
+          <h2 style={stylesTile}>{todo.title}</h2>
+          <p style={stylesDescription}>{todo.description}</p>
         </li>
         <li>
-          {todo.completed ? (
+          {todo.status == "Completed" ? (
             <IoMdCheckmarkCircle
               color={"green"}
               size={"1.5em"}

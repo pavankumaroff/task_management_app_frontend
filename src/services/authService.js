@@ -1,4 +1,4 @@
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import http from "./httpService";
 
 const apiEndPoint = "/auth";
@@ -20,7 +20,7 @@ export function loginWithJwt(jwt) {
 export function getCurrentUser() {
   try {
     const jwt = localStorage.getItem(tokenKey);
-    return jwt_decode(jwt);
+    return jwtDecode(jwt);
   } catch (error) {
     return null;
   }

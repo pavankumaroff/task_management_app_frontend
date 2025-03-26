@@ -21,13 +21,24 @@ function TodoForm({ onAdd, disabled }) {
       <h1 className="create-task">
         Create <span>Task</span>
       </h1>
-      <Input
-        type={"text"}
-        register={register("title")}
-        autoFocus={true}
-        placeholder="What needs to be done?"
-      />
-      {errors.title && <p className="alert">{errors.title.message}</p>}
+      <div>
+        <Input
+          type={"text"}
+          register={register("title")}
+          autoFocus={true}
+          placeholder="Add Title"
+        />
+        {errors.title && <p className="alert">{errors.title.message}</p>}
+        <Input
+          type={"text"}
+          register={register("description")}
+          autoFocus={true}
+          placeholder="Add Description"
+        />
+        {errors.description && (
+          <p className="alert">{errors.description.message}</p>
+        )}
+      </div>
       <Button disabled={disabled}>Add</Button>
     </form>
   );

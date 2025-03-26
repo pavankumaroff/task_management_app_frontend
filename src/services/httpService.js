@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
 
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
