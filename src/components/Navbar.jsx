@@ -13,12 +13,9 @@ function TodoNavbar() {
     <header>
       <nav className="navbar">
         <div className="logo">
-          <h1>Todo-List</h1>
+          <h1>Task-Management</h1>
         </div>
-        <ul
-          className={isActive ? "list active" : "list"}
-          style={user?.isAdmin && { width: "50%" }}
-        >
+        <ul className={isActive ? "list active" : "list"}>
           <li>
             <NavLink
               style={({ isActive }) =>
@@ -39,30 +36,6 @@ function TodoNavbar() {
               Todos
             </NavLink>
           </li>
-          {user?.isAdmin && (
-            <>
-              <li>
-                <NavLink
-                  style={({ isActive }) =>
-                    isActive ? { color: "lightgray" } : { color: "" }
-                  }
-                  to="/admin"
-                >
-                  Admin
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  style={({ isActive }) =>
-                    isActive ? { color: "lightgray" } : { color: "" }
-                  }
-                  to="/users"
-                >
-                  Users
-                </NavLink>
-              </li>
-            </>
-          )}
           <li>
             <Link to="/logout">Logout</Link>
           </li>

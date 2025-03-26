@@ -9,6 +9,7 @@ import auth from "../services/authService";
 import Loading from "../common/Loading";
 import { toast } from "react-toastify";
 import "./TodoList.css";
+import Input from "../common/Input";
 
 function TodoList() {
   const user = useContext(UserContext);
@@ -18,10 +19,13 @@ function TodoList() {
   const [currentTodo, setCurrentTodo] = useState({});
   const [editOff, setEditOff] = useState(true);
   const [task, setTask] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [prevPage, setPrevPage] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   const [error, setError] = useState("");
   const [disabled, setDisabled] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -71,20 +75,25 @@ function TodoList() {
   const handleUpdate = async (todo) => {
     const originalTodos = todos;
 
-    // if (todo.completed) return;
     if (todo.status == "Completed") return;
     setEditOff((prev) => !prev);
     setCurrentTodo(editOff ? todo : {});
-    setTask(todo.title);
+    setTitle(todo.title);
+    setDescription(todo.description);
 
     if (!editOff) {
       if (error) return;
-      if (task.trim() === todo.title) return;
+      if (
+        title.trim() === todo.title &&
+        description.trim() === todo.description
+      )
+        return;
 
       const newTodos = [...originalTodos];
       const index = newTodos.indexOf(todo);
       newTodos[index] = { ...todo };
-      newTodos[index].title = task;
+      newTodos[index].title = title;
+      newTodos[index].description = description;
       setTodos(newTodos);
 
       try {
@@ -102,9 +111,13 @@ function TodoList() {
     const newTodos = [...originalTodos];
     const index = newTodos.findIndex((td) => td._id === todo._id);
     newTodos[index] = { ...todo };
-    // newTodos[index].completed = !newTodos[index].completed;
-    if (editOff) newTodos[index].status = "Completed";
-    else newTodos[index].status = "Pending";
+
+    if (newTodos[index].status == "Completed") {
+      newTodos[index].status = "Pending";
+    } else {
+      newTodos[index].status = "Completed";
+    }
+
     setTodos(newTodos);
 
     try {
@@ -139,15 +152,24 @@ function TodoList() {
     setPrevPage((prev) => prev + 1);
   };
 
-  const items = paginate(todos, nextPage, pageSize);
+  const newTodos = todos.filter((todo) =>
+    todo.title.toLowerCase().includes(search)
+  );
+  const items = paginate(newTodos, nextPage, pageSize);
 
   return (
     <>
-      <TodoForm onAdd={handleAdd} disabled={disabled} />
+      <TodoForm onAdd={handleAdd} onEdit={handleUpdate} disabled={disabled} />
       <div className="todo-list">
         <h1 className="my-tasks">
           My <span>Tasks</span>
         </h1>
+        <Input
+          labelRequired={false}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search..."
+        />
         <Pagination
           editOff={editOff}
           prevPage={prevPage}

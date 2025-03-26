@@ -14,3 +14,10 @@
 .my-tasks span {
   font-weight: lighter;
 }
+
+/* .create-task {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+} */

@@ -6,7 +6,7 @@ import Input from "../common/Input";
 import Button from "../common/Button";
 import "./TodoForm.css";
 
-function TodoForm({ onAdd, disabled }) {
+function TodoForm({ onAdd, onUpdate, disabled }) {
   const user = useContext(UserContext);
   const { register, handleSubmit, formState, reset } = useForm(options);
   const { errors } = formState;

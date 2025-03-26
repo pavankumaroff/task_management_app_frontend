@@ -1,11 +1,20 @@
 import "./Input.css";
 
-function Input({ type = "text", id, register, label, ...rest }) {
+function Input({
+  type = "text",
+  id,
+  register,
+  label,
+  labelRequired = true,
+  ...rest
+}) {
   return (
     <div className="form-control">
-      <label htmlFor={id} className="form-label">
-        {label}
-      </label>
+      {labelRequired && (
+        <label htmlFor={id} className="form-label">
+          {label}
+        </label>
+      )}
       <input
         {...rest}
         {...register}

@@ -21,12 +21,14 @@ function Todo({
     wordWrap: "wrap-word",
     textAlign: "justify",
     marginBottom: "10px",
+    textDecoration: todo.status == "Completed" ? "line-through" : "",
   };
 
   const stylesDescription = {
     fontSize: "18px",
     wordWrap: "wrap-word",
     textAlign: "justify",
+    textDecoration: todo.status == "Completed" ? "line-through" : "",
   };
 
   return (

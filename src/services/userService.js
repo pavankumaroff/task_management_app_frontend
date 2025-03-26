@@ -9,11 +9,3 @@ export function getUser() {
 export function registerUser(user) {
   return http.post(apiEndPoint, user);
 }
-
-export function getUsersByAdmin() {
-  return http.get(apiEndPoint);
-}
-
-export function deleteUserByAdmin(user) {
-  return http.delete(`${apiEndPoint}/${user._id}`);
-}
